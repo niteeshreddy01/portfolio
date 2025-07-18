@@ -12,15 +12,15 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #111827; /* bg-gray-900 */
-            color: #E5E7EB; /* text-gray-200 */
-            overflow: hidden; /* Hide scrollbar for entry animation */
+            background-color: #111827;
+            color: #E5E7EB;
+            overflow: auto; /* Changed from 'hidden' to allow scrolling */
         }
         .heading-font {
             font-family: 'Bungee', cursive;
         }
         .main-yellow {
-            color: #facc15; /* amber-400 */
+            color: #facc15; /* A strong yellow color (amber-400) */
         }
         .bg-main-yellow {
             background-color: #facc15;
@@ -28,15 +28,18 @@
         .hover-bg-main-yellow:hover {
             background-color: #eab308; /* amber-500 */
         }
-        /* The @apply directive is not supported by the CDN, so we use standard CSS for this pseudo-element */
+        .section-title {
+            @apply text-4xl font-bold text-center mb-12 text-white relative heading-font;
+        }
         .section-title::after {
             content: '';
-            display: block;
-            width: 5rem; /* w-20 */
-            height: 0.25rem; /* h-1 */
-            background-color: #facc15; /* bg-main-yellow */
-            margin: 1rem auto 0; /* mt-4 mx-auto */
-            border-radius: 9999px; /* rounded-full */
+            @apply block w-20 h-1 bg-main-yellow mx-auto mt-4 rounded-full;
+        }
+        .card {
+            @apply bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-yellow-400/20 hover:scale-[1.02] transition-all duration-300 flex flex-col;
+        }
+        .tag {
+            @apply inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full;
         }
         .reveal {
             position: relative;
@@ -49,7 +52,7 @@
             opacity: 1;
         }
 
-        /* Entry Screen Styles */
+        /* Entry Screen Styles (Functionality disabled for preview) */
         #entry-screen {
             position: fixed;
             top: 0;
@@ -116,14 +119,20 @@
 </head>
 <body class="antialiased">
 
+    <!-- Entry Screen (Commented out for preview purposes. Uncomment to restore functionality) -->
+    <!-- 
     <div id="entry-screen">
         <h1 class="heading-font">Niteesh Reddy. G</h1>
-        <button id="enter-button" class="heading-font">
-            Enter
+        <button id="enter-button" class="heading-font flex items-center gap-2">
+            <i data-lucide="arrow-down-circle"></i>
+            View My Work
         </button>
     </div>
+    -->
 
+    <!-- Main Content (initially under the entry screen) -->
     <div id="main-content">
+        <!-- Header & Navigation -->
         <header class="bg-gray-900/50 backdrop-blur-lg fixed top-0 left-0 right-0 z-50">
             <div class="container mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#" class="text-2xl text-white heading-font">Niteesh Reddy. G</a>
@@ -132,32 +141,29 @@
                     <a href="#projects" class="text-gray-300 hover:main-yellow transition-colors">Projects</a>
                     <a href="#skills" class="text-gray-300 hover:main-yellow transition-colors">Skills</a>
                     <a href="#education" class="text-gray-300 hover:main-yellow transition-colors">Education</a>
-                    <a href="#certifications" class="text-gray-300 hover:main-yellow transition-colors">Certifications</a>
                     <a href="#contact" class="text-gray-300 hover:main-yellow transition-colors">Contact</a>
                 </nav>
                 <button id="mobile-menu-button" class="md:hidden text-white">
                     <i data-lucide="menu"></i>
                 </button>
             </div>
+            <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden md:hidden">
                 <a href="#about" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">About</a>
                 <a href="#projects" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Projects</a>
                 <a href="#skills" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Skills</a>
                 <a href="#education" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Education</a>
-                <a href="#certifications" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Certifications</a>
                 <a href="#contact" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Contact</a>
             </div>
         </header>
 
         <main class="pt-24">
+            <!-- Hero Section -->
             <section id="hero" class="min-h-[80vh] flex items-center">
                 <div class="container mx-auto px-6 text-center">
                     <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4 heading-font">
                         Niteesh Reddy. G
                     </h1>
-                     <p class="max-w-2xl mx-auto text-lg text-gray-400 mb-8">
-                        Where curiosity meets creation.
-                    </p>
                     <div class="flex justify-center items-center space-x-4 mt-8">
                         <a href="https://linkedin.com/in/niteeshreddy01/" target="_blank" class="text-gray-300 hover:main-yellow transition-colors">
                             <i data-lucide="linkedin" class="w-8 h-8"></i>
@@ -177,9 +183,10 @@
                 </div>
             </section>
 
+            <!-- About Section -->
             <section id="about" class="py-20">
                 <div class="container mx-auto px-6">
-                    <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">About Me</h2>
+                    <h2 class="section-title reveal">About Me</h2>
                     <div class="max-w-3xl mx-auto text-center text-lg text-gray-400 reveal">
                         <p>
                             I am a dedicated and ambitious Computer Science and Engineering student at Jain University with a strong foundation in programming, data structures, and algorithms. I am passionate about leveraging technology to solve real-world problems, with a particular interest in Artificial Intelligence and Machine Learning. My project experience includes developing fairness-aware ML pipelines and deep learning models for disease detection. I am a quick learner, a collaborative team player, and possess strong problem-solving and communication skills.
@@ -188,104 +195,99 @@
                 </div>
             </section>
 
+            <!-- Projects Section -->
             <section id="projects" class="py-20 bg-gray-900">
                 <div class="container mx-auto px-6">
-                    <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">Projects</h2>
+                    <h2 class="section-title reveal">Projects</h2>
                     <div class="grid md:grid-cols-2 gap-8">
-                        <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-yellow-400/20 hover:scale-[1.02] transition-all duration-300 flex flex-col reveal">
-                            <h3 class="text-xl font-bold text-white mb-2">Analyzing and Mitigating Algorithmic Bias in Hiring</h3>
-                            <p class="text-sm main-yellow mb-4">2024 - 2025</p>
-                            <p class="text-gray-400 mb-4 flex-grow">
-                                Developed a fairness-aware Machine Learning pipeline using Random Forest and the IBM AIF360 toolkit to identify and mitigate bias in hiring prediction models.
-                            </p>
-                            <ul class="list-disc list-inside text-gray-400 space-y-2">
-                                <li>Improved fairness metrics like SPD, DI, and EOD while maintaining model accuracy.</li>
-                                <li>Applied Reweighing and Prejudice Remover algorithms to effectively reduce gender bias.</li>
-                            </ul>
+                        <!-- Project 1 Card -->
+                        <div class="card reveal">
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-bold text-white pr-4">Analyzing and Mitigating Algorithmic Bias in Hiring</h3>
+                                    <a href="https://github.com/niteeshreddy01/Analyzing-and-Mitigating-Algorithmic-Bias-in-Hiring-Prediction-Models-using-Fairness-Toolkits" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:main-yellow transition-colors flex-shrink-0">
+                                        <i data-lucide="github" class="w-6 h-6"></i>
+                                    </a>
+                                </div>
+                                <p class="text-sm main-yellow mb-4">2024 - 2025</p>
+                                <p class="text-gray-400 mb-4">
+                                    Developed a fairness-aware Machine Learning pipeline using Random Forest and the IBM AIF360 toolkit to identify and mitigate bias in hiring prediction models.
+                                </p>
+                                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                                    <li>Improved fairness metrics like SPD, DI, and EOD while maintaining model accuracy.</li>
+                                    <li>Applied Reweighing and Prejudice Remover algorithms to effectively reduce gender bias.</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-yellow-400/20 hover:scale-[1.02] transition-all duration-300 flex flex-col reveal">
-                            <h3 class="text-xl font-bold text-white mb-2">Neurodegenerative Disease Detection with Deep Learning</h3>
-                            <p class="text-sm main-yellow mb-4">2023 - 2024</p>
-                            <p class="text-gray-400 mb-4 flex-grow">
-                                Constructed an enhanced NeuroNet deep learning framework combining CNNs, RNNs, and Transformers for early detection and progression analysis of neurodegenerative diseases.
-                            </p>
-                            <ul class="list-disc list-inside text-gray-400 space-y-2">
-                                <li>Achieved 97.5% diagnostic and 94% progression accuracy on a dataset of 15,000 patients.</li>
-                                <li>Integrated imaging, clinical history, and biomarkers using a multimodal fusion system.</li>
-                            </ul>
+                        <!-- Project 2 Card -->
+                        <div class="card reveal">
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-bold text-white pr-4">Neurodegenerative Disease Detection with Deep Learning</h3>
+                                     <a href="https://github.com/niteeshreddy01/Neurodegenerative-Disease-Detection-with-Enhanced-NeuroNet-Deep-Learning-Framework" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:main-yellow transition-colors flex-shrink-0">
+                                        <i data-lucide="github" class="w-6 h-6"></i>
+                                    </a>
+                                </div>
+                                <p class="text-sm main-yellow mb-4">2023 - 2024</p>
+                                <p class="text-gray-400 mb-4">
+                                    Constructed an enhanced NeuroNet deep learning framework combining CNNs, RNNs, and Transformers for early detection and progression analysis of neurodegenerative diseases.
+                                </p>
+                                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                                    <li>Achieved 97.5% diagnostic and 94% progression accuracy on a dataset of 15,000 patients.</li>
+                                    <li>Integrated imaging, clinical history, and biomarkers using a multimodal fusion system.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
+            <!-- Skills Section -->
             <section id="skills" class="py-20">
                 <div class="container mx-auto px-6">
-                    <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">Technical Skills</h2>
+                    <h2 class="section-title reveal">Technical Skills</h2>
                     <div class="max-w-4xl mx-auto">
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal">
-                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Languages</h3><div class="flex flex-wrap justify-center gap-2"><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Java</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Python</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">C/C++</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">SQL</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">JavaScript</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">HTML/CSS</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">R</span></div></div>
-                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Frameworks</h3><div class="flex flex-wrap justify-center gap-2"><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">React</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Node.js</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Flask</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">WordPress</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Material-UI</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">FastAPI</span></div></div>
-                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Dev Tools</h3><div class="flex flex-wrap justify-center gap-2"><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Git</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Docker</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">GCP</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">VS Code</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">PyCharm</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">IntelliJ</span></div></div>
-                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Libraries</h3><div class="flex flex-wrap justify-center gap-2"><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Pandas</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">NumPy</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Matplotlib</span></div></div>
+                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Languages</h3><div class="flex flex-wrap justify-center gap-2"><span class="tag">Java</span><span class="tag">Python</span><span class="tag">C/C++</span><span class="tag">SQL</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span><span class="tag">R</span></div></div>
+                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Frameworks</h3><div class="flex flex-wrap justify-center gap-2"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Flask</span><span class="tag">WordPress</span><span class="tag">Material-UI</span><span class="tag">FastAPI</span></div></div>
+                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Dev Tools</h3><div class="flex flex-wrap justify-center gap-2"><span class="tag">Git</span><span class="tag">Docker</span><span class="tag">GCP</span><span class="tag">VS Code</span><span class="tag">PyCharm</span><span class="tag">IntelliJ</span></div></div>
+                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Libraries</h3><div class="flex flex-wrap justify-center gap-2"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span></div></div>
                         </div>
                     </div>
                 </div>
             </section>
 
+            <!-- Education Section -->
             <section id="education" class="py-20 bg-gray-900">
                 <div class="container mx-auto px-6">
-                    <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">Education</h2>
+                    <h2 class="section-title reveal">Education</h2>
                     <div class="max-w-3xl mx-auto relative">
-                        <div class="absolute left-4 md:left-1/2 -translate-x-1/2 h-full w-0.5 bg-main-yellow"></div>
+                        <div class="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-gray-700 hidden md:block"></div>
                         <div class="space-y-12">
-                            <div class="reveal relative pl-10 md:grid md:grid-cols-2 md:gap-8 md:pl-0 items-center">
-                                <div class="md:text-right md:pr-8 mb-4 md:mb-0">
-                                    <p class="font-bold main-yellow">2022 - 2026</p>
-                                </div>
-                                <div class="md:pl-8 md:border-l-4 border-transparent">
-                                    <h3 class="text-lg font-bold text-white">Bachelor of Technology, CSE</h3>
-                                    <p class="text-gray-400">Jain University, Bengaluru</p>
-                                </div>
-                            </div>
-                             <div class="reveal relative pl-10 md:grid md:grid-cols-2 md:gap-8 md:pl-0 items-center">
-                                <div class="md:text-right md:pr-8 mb-4 md:mb-0">
-                                    <p class="font-bold main-yellow">2021 - 2022</p>
-                                </div>
-                                <div class="md:pl-8 md:border-l-4 border-transparent">
-                                    <h3 class="text-lg font-bold text-white">12th Class (92.83%)</h3>
-                                    <p class="text-gray-400">Narayana Jr college, Anantapur</p>
-                                </div>
-                            </div>
-                            <div class="reveal relative pl-10 md:grid md:grid-cols-2 md:gap-8 md:pl-0 items-center">
-                                <div class="md:text-right md:pr-8 mb-4 md:mb-0">
-                                    <p class="font-bold main-yellow">2019 - 2020</p>
-                                </div>
-                                <div class="md:pl-8 md:border-l-4 border-transparent">
-                                    <h3 class="text-lg font-bold text-white">10th Class (99.83%)</h3>
-                                    <p class="text-gray-400">Sri Chaitanya School, Anantapur</p>
-                                </div>
-                            </div>
+                            <div class="reveal md:grid md:grid-cols-2 md:gap-8 items-center"><div class="md:text-right md:pr-8 mb-4 md:mb-0"><p class="font-bold main-yellow">2022 - 2026</p></div><div class="md:pl-8 md:border-l-4 border-yellow-400"><h3 class="text-lg font-bold text-white">Bachelor of Technology, CSE</h3><p class="text-gray-400">Jain University, Bengaluru</p></div></div>
+                            <div class="reveal md:grid md:grid-cols-2 md:gap-8 items-center"><div class="md:text-right md:pr-8 mb-4 md:mb-0"><p class="font-bold main-yellow">2021 - 2022</p></div><div class="md:pl-8 md:border-l-4 border-yellow-400"><h3 class="text-lg font-bold text-white">12th Class (92.83%)</h3><p class="text-gray-400">Narayana Jr college, Anantapur</p></div></div>
+                            <div class="reveal md:grid md:grid-cols-2 md:gap-8 items-center"><div class="md:text-right md:pr-8 mb-4 md:mb-0"><p class="font-bold main-yellow">2019 - 2020</p></div><div class="md:pl-8 md:border-l-4 border-yellow-400"><h3 class="text-lg font-bold text-white">10th Class (99.83%)</h3><p class="text-gray-400">Sri Chaitanya School, Anantapur</p></div></div>
                         </div>
                     </div>
                 </div>
             </section>
             
+            <!-- Certifications Section -->
             <section id="certifications" class="py-20">
                 <div class="container mx-auto px-6">
-                    <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">Certifications</h2>
-                    <div class="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-6 text-center reveal">
-                        <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-yellow-400/20 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center"><p class="font-semibold text-white">Oracle Certified Data Science Professional</p></div>
-                        <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-yellow-400/20 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center"><p class="font-semibold text-white">Google Project Management</p></div>
-                        <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-yellow-400/20 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center"><p class="font-semibold text-white">IBM AI Fundamentals</p></div>
-                        <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-yellow-400/20 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center"><p class="font-semibold text-white">Microsoft/LinkedIn Data Analysis</p></div>
-                        <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-yellow-400/20 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center lg:col-span-2"><p class="font-semibold text-white">LinkedIn Intro to Data Analytics</p></div>
+                    <h2 class="section-title reveal">Certifications</h2>
+                    <div class="max-w-4xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-6 text-center reveal">
+                        <div class="card p-4"><p class="font-semibold text-white">Google Project Management</p></div>
+                        <div class="card p-4"><p class="font-semibold text-white">AI Fundamentals by IBM</p></div>
+                        <div class="card p-4"><p class="font-semibold text-white">Data Analysis by Microsoft</p></div>
                     </div>
                 </div>
             </section>
 
+            <!-- Contact Section -->
             <section id="contact" class="py-20 bg-gray-900">
                 <div class="container mx-auto px-6">
-                    <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">Get In Touch</h2>
+                    <h2 class="section-title reveal">Get In Touch</h2>
                     <div class="max-w-xl mx-auto text-center reveal">
                          <p class="text-gray-400 mb-8">I'm currently seeking new opportunities and would love to hear from you. Whether you have a question or just want to say hi, feel free to reach out.</p>
                         <a href="mailto:gniteeshreddy@gmail.com" class="inline-block bg-main-yellow hover-bg-main-yellow text-gray-900 font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105">Say Hello</a>
@@ -296,6 +298,7 @@
             </section>
         </main>
 
+        <!-- Footer -->
         <footer class="bg-gray-900 border-t border-gray-800">
             <div class="container mx-auto px-6 py-6 text-center text-gray-500">
                 <div class="flex justify-center items-center space-x-4 mb-4">
@@ -312,7 +315,8 @@
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // --- Entry Screen Logic ---
+        // --- Entry Screen Logic (Commented out for preview purposes) ---
+        /*
         const entryScreen = document.getElementById('entry-screen');
         const enterButton = document.getElementById('enter-button');
         
@@ -320,11 +324,12 @@
             entryScreen.classList.add('hidden');
             document.body.style.overflow = 'auto'; // Restore scrollbar
             
-            // Hides the element from the accessibility tree after the transition
+            // This is a more robust way to hide the element after its transition.
             entryScreen.addEventListener('transitionend', () => {
                 entryScreen.style.display = 'none';
-            }, { once: true });
+            }, { once: true }); // The listener will automatically remove itself after firing once.
         });
+        */
 
         // --- Mobile Menu Logic ---
         const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -332,7 +337,7 @@
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
-        document.querySelectorAll('#mobile-menu a, nav a').forEach(link => {
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
             });
@@ -351,8 +356,7 @@
             }
         };
         window.addEventListener('scroll', reveal);
-        // Run the function on page load to reveal visible elements
-        reveal();
+        reveal(); // Initial check
     </script>
 </body>
 </html>
