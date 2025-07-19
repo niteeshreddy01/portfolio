@@ -10,11 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        /* Base styles */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #111827; /* bg-gray-900 */
             color: #E5E7EB; /* text-gray-200 */
-            overflow: hidden; /* Hide scrollbar for entry animation */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-y: hidden; /* Hide scrollbar for entry animation */
         }
         .heading-font {
             font-family: 'Bungee', cursive;
@@ -28,7 +30,11 @@
         .hover-bg-main-yellow:hover {
             background-color: #eab308; /* amber-500 */
         }
-        /* The @apply directive is not supported by the CDN, so we use standard CSS for this pseudo-element */
+        .border-main-yellow {
+            border-color: #facc15;
+        }
+
+        /* Section title underline */
         .section-title::after {
             content: '';
             display: block;
@@ -38,6 +44,8 @@
             margin: 1rem auto 0; /* mt-4 mx-auto */
             border-radius: 9999px; /* rounded-full */
         }
+
+        /* Scroll reveal animation */
         .reveal {
             position: relative;
             transform: translateY(100px);
@@ -92,38 +100,48 @@
             transform: scale(1.05);
         }
 
-        /* Keyframe Animations */
-        @keyframes zoomInPop {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            70% {
-                transform: scale(1.05);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
+        /* Education Timeline Dot */
+        .timeline-dot {
+            content: '';
+            position: absolute;
+            top: 0.5rem;
+            left: 1rem; /* For mobile */
+            transform: translateX(-50%);
+            width: 1rem;
+            height: 1rem;
+            background-color: #facc15;
+            border-radius: 9999px;
+            border: 3px solid #111827;
+            z-index: 10;
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .timeline-dot {
+                left: 50%;
             }
         }
+
+        /* Keyframe Animations */
+        @keyframes zoomInPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
         @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body class="antialiased">
 
+    <!-- Entry screen for initial animation -->
     <div id="entry-screen">
         <h1 class="heading-font">Niteesh Reddy. G</h1>
-        <button id="enter-button" class="heading-font">
-            Enter
-        </button>
+        <button id="enter-button" class="heading-font">Enter</button>
     </div>
 
-    <div id="main-content">
+    <!-- Main content of the page -->
+    <div id="main-content" class="opacity-0 transition-opacity duration-500">
+        <!-- Header and Navigation -->
         <header class="bg-gray-900/50 backdrop-blur-lg fixed top-0 left-0 right-0 z-50">
             <div class="container mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#" class="text-2xl text-white heading-font">Niteesh Reddy. G</a>
@@ -135,141 +153,141 @@
                     <a href="#certifications" class="text-gray-300 hover:main-yellow transition-colors">Certifications</a>
                     <a href="#contact" class="text-gray-300 hover:main-yellow transition-colors">Contact</a>
                 </nav>
-                <button id="mobile-menu-button" class="md:hidden text-white">
+                <button id="mobile-menu-button" class="md:hidden text-white" aria-label="Toggle Menu">
                     <i data-lucide="menu"></i>
                 </button>
             </div>
+            <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden md:hidden">
-                <a href="#about" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">About</a>
-                <a href="#projects" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Projects</a>
-                <a href="#skills" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Skills</a>
-                <a href="#education" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Education</a>
-                <a href="#certifications" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Certifications</a>
-                <a href="#contact" class="block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Contact</a>
+                <a href="#about" class="mobile-menu-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">About</a>
+                <a href="#projects" class="mobile-menu-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Projects</a>
+                <a href="#skills" class="mobile-menu-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Skills</a>
+                <a href="#education" class="mobile-menu-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Education</a>
+                <a href="#certifications" class="mobile-menu-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Certifications</a>
+                <a href="#contact" class="mobile-menu-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Contact</a>
             </div>
         </header>
 
         <main class="pt-24">
+            <!-- Hero Section -->
             <section id="hero" class="min-h-[80vh] flex items-center">
                 <div class="container mx-auto px-6 text-center">
-                    <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4 heading-font">
-                        Niteesh Reddy. G
-                    </h1>
-                     <p class="max-w-2xl mx-auto text-lg text-gray-400 mb-8">
-                        Aspiring AI and Machine Learning Engineer passionate about building intelligent solutions.
-                    </p>
+                    <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4 heading-font">Niteesh Reddy. G</h1>
+                    <p class="max-w-2xl mx-auto text-lg text-gray-400 mb-8">Where curiosity meets creation.</p>
                     <div class="flex justify-center items-center space-x-4 mt-8">
-                        <a href="https://linkedin.com/in/niteeshreddy01/" target="_blank" class="text-gray-300 hover:main-yellow transition-colors">
+                        <a href="https://linkedin.com/in/niteeshreddy01/" target="_blank" class="text-gray-300 hover:main-yellow transition-colors" aria-label="LinkedIn Profile">
                             <i data-lucide="linkedin" class="w-8 h-8"></i>
                         </a>
-                        <a href="https://github.com/niteeshreddy01" target="_blank" class="text-gray-300 hover:main-yellow transition-colors">
+                        <a href="https://github.com/niteeshreddy01" target="_blank" class="text-gray-300 hover:main-yellow transition-colors" aria-label="GitHub Profile">
                             <i data-lucide="github" class="w-8 h-8"></i>
                         </a>
-                        <a href="mailto:gniteeshreddy@gmail.com" class="text-gray-300 hover:main-yellow transition-colors">
+                        <a href="mailto:gniteeshreddy@gmail.com" class="text-gray-300 hover:main-yellow transition-colors" aria-label="Send Email">
                             <i data-lucide="mail" class="w-8 h-8"></i>
                         </a>
                     </div>
-                    <div class="mt-10">
-                        <a href="#contact" class="bg-main-yellow hover-bg-main-yellow text-gray-900 font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105">
-                            Get In Touch
-                        </a>
+                    <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="#contact" class="bg-main-yellow hover-bg-main-yellow text-gray-900 font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 w-full sm:w-auto">Get In Touch</a>
+                        <!-- ADD YOUR RESUME/CV PATH HERE -->
+                        <a href="./Niteesh_Reddy_Resume.pdf" download="Niteesh_Reddy_Resume.pdf" class="border-2 border-main-yellow text-main-yellow font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:bg-main-yellow hover:text-gray-900 w-full sm:w-auto">Download CV</a>
                     </div>
                 </div>
             </section>
 
+            <!-- About Me Section -->
             <section id="about" class="py-20">
                 <div class="container mx-auto px-6">
                     <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">About Me</h2>
                     <div class="max-w-3xl mx-auto text-center text-lg text-gray-400 reveal">
-                        <p>
-                            I am a dedicated and ambitious Computer Science and Engineering student at Jain University with a strong foundation in programming, data structures, and algorithms. I am passionate about leveraging technology to solve real-world problems, with a particular interest in Artificial Intelligence and Machine Learning. My project experience includes developing fairness-aware ML pipelines and deep learning models for disease detection. I am a quick learner, a collaborative team player, and possess strong problem-solving and communication skills.
-                        </p>
+                        <p>I am a dedicated and ambitious Computer Science and Engineering student at Jain University with a strong foundation in programming, data structures, and algorithms. I am passionate about leveraging technology to solve real-world problems, with a particular interest in Artificial Intelligence and Machine Learning. My project experience includes developing fairness-aware ML pipelines and deep learning models for disease detection. I am a quick learner, a collaborative team player, and possess strong problem-solving and communication skills.</p>
                     </div>
                 </div>
             </section>
 
-            <section id="projects" class="py-20 bg-gray-900">
+            <!-- Projects Section -->
+            <section id="projects" class="py-20 bg-gray-800/50">
                 <div class="container mx-auto px-6">
                     <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">Projects</h2>
                     <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Project 1 -->
                         <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-yellow-400/20 hover:scale-[1.02] transition-all duration-300 flex flex-col reveal">
                             <h3 class="text-xl font-bold text-white mb-2">Analyzing and Mitigating Algorithmic Bias in Hiring</h3>
                             <p class="text-sm main-yellow mb-4">2024 - 2025</p>
-                            <p class="text-gray-400 mb-4 flex-grow">
-                                Developed a fairness-aware Machine Learning pipeline using Random Forest and the IBM AIF360 toolkit to identify and mitigate bias in hiring prediction models.
-                            </p>
-                            <ul class="list-disc list-inside text-gray-400 space-y-2">
+                            <p class="text-gray-400 mb-4 flex-grow">Developed a fairness-aware Machine Learning pipeline using Random Forest and the IBM AIF360 toolkit to identify and mitigate bias in hiring prediction models.</p>
+                            <ul class="list-disc list-inside text-gray-400 space-y-2 mb-4">
                                 <li>Improved fairness metrics like SPD, DI, and EOD while maintaining model accuracy.</li>
                                 <li>Applied Reweighing and Prejudice Remover algorithms to effectively reduce gender bias.</li>
                             </ul>
+                            <div class="mt-auto pt-4 border-t border-gray-700">
+                                <a href="https://github.com/niteeshreddy01/Analyzing-and-Mitigating-Algorithmic-Bias-in-Hiring-Prediction-Models-using-Fairness-Toolkits" target="_blank" class="flex items-center gap-2 text-gray-300 hover:main-yellow transition-colors font-semibold">
+                                    <i data-lucide="github" class="w-5 h-5"></i> Source Code
+                                </a>
+                            </div>
                         </div>
+                        <!-- Project 2 -->
                         <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-yellow-400/20 hover:scale-[1.02] transition-all duration-300 flex flex-col reveal">
                             <h3 class="text-xl font-bold text-white mb-2">Neurodegenerative Disease Detection with Deep Learning</h3>
                             <p class="text-sm main-yellow mb-4">2023 - 2024</p>
-                            <p class="text-gray-400 mb-4 flex-grow">
-                                Constructed an enhanced NeuroNet deep learning framework combining CNNs, RNNs, and Transformers for early detection and progression analysis of neurodegenerative diseases.
-                            </p>
-                            <ul class="list-disc list-inside text-gray-400 space-y-2">
+                            <p class="text-gray-400 mb-4 flex-grow">Constructed an enhanced NeuroNet deep learning framework combining CNNs, RNNs, and Transformers for early detection and progression analysis of neurodegenerative diseases.</p>
+                            <ul class="list-disc list-inside text-gray-400 space-y-2 mb-4">
                                 <li>Achieved 97.5% diagnostic and 94% progression accuracy on a dataset of 15,000 patients.</li>
                                 <li>Integrated imaging, clinical history, and biomarkers using a multimodal fusion system.</li>
                             </ul>
+                            <div class="mt-auto pt-4 border-t border-gray-700">
+                                <a href="https://github.com/niteeshreddy01/Neurodegenerative-Disease-Detection-with-Enhanced-NeuroNet-Deep-Learning-Framework" target="_blank" class="flex items-center gap-2 text-gray-300 hover:main-yellow transition-colors font-semibold">
+                                    <i data-lucide="github" class="w-5 h-5"></i> Source Code
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
+            <!-- Skills Section -->
             <section id="skills" class="py-20">
                 <div class="container mx-auto px-6">
                     <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">Technical Skills</h2>
-                    <div class="max-w-4xl mx-auto">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal">
-                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Languages</h3><div class="flex flex-wrap justify-center gap-2"><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Java</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Python</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">C/C++</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">SQL</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">JavaScript</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">HTML/CSS</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">R</span></div></div>
-                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Frameworks</h3><div class="flex flex-wrap justify-center gap-2"><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">React</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Node.js</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Flask</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">WordPress</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Material-UI</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">FastAPI</span></div></div>
-                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Dev Tools</h3><div class="flex flex-wrap justify-center gap-2"><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Git</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Docker</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">GCP</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">VS Code</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">PyCharm</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">IntelliJ</span></div></div>
-                            <div class="space-y-4"><h3 class="text-lg font-semibold text-white">Libraries</h3><div class="flex flex-wrap justify-center gap-2"><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Pandas</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">NumPy</span><span class="inline-block bg-main-yellow text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">Matplotlib</span></div></div>
+                    <div class="max-w-5xl mx-auto space-y-10 reveal">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                            <div><h3 class="text-xl font-bold text-white mb-4">Languages</h3><div class="flex flex-wrap justify-center gap-2"><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">Java</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">Python</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">C/C++</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">SQL</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">JavaScript</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">HTML/CSS</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">R</span></div></div>
+                            <div><h3 class="text-xl font-bold text-white mb-4">Frameworks</h3><div class="flex flex-wrap justify-center gap-2"><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">React</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">Node.js</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">Flask</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">WordPress</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">Material-UI</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">FastAPI</span></div></div>
+                            <div><h3 class="text-xl font-bold text-white mb-4">Dev Tools</h3><div class="flex flex-wrap justify-center gap-2"><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">Git</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">Docker</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">GCP</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">VS Code</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">PyCharm</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">IntelliJ</span></div></div>
+                            <div><h3 class="text-xl font-bold text-white mb-4">Libraries</h3><div class="flex flex-wrap justify-center gap-2"><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">Pandas</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">NumPy</span><span class="bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-full">Matplotlib</span></div></div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section id="education" class="py-20 bg-gray-900">
+            <!-- Education Section -->
+            <section id="education" class="py-20 bg-gray-800/50">
                 <div class="container mx-auto px-6">
-                    <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">Education</h2>
+                    <h2 class="section-title text-4xl font-bold text-center mb-16 text-white relative heading-font reveal">Education</h2>
                     <div class="max-w-3xl mx-auto relative">
                         <div class="absolute left-4 md:left-1/2 -translate-x-1/2 h-full w-0.5 bg-main-yellow"></div>
                         <div class="space-y-12">
+                            <!-- Education Item 1 -->
                             <div class="reveal relative pl-10 md:grid md:grid-cols-2 md:gap-8 md:pl-0 items-center">
-                                <div class="md:text-right md:pr-8 mb-4 md:mb-0">
-                                    <p class="font-bold main-yellow">2022 - 2026</p>
-                                </div>
-                                <div class="md:pl-8 md:border-l-4 border-transparent">
-                                    <h3 class="text-lg font-bold text-white">Bachelor of Technology, CSE</h3>
-                                    <p class="text-gray-400">Jain University, Bengaluru</p>
-                                </div>
+                                <div class="timeline-dot"></div>
+                                <div class="md:text-right md:pr-8 mb-2 md:mb-0"><p class="font-bold main-yellow">2022 - 2026</p></div>
+                                <div class="md:pl-8"><h3 class="text-lg font-bold text-white">Bachelor of Technology, CSE</h3><p class="text-gray-400">Jain University, Bengaluru</p></div>
                             </div>
-                             <div class="reveal relative pl-10 md:grid md:grid-cols-2 md:gap-8 md:pl-0 items-center">
-                                <div class="md:text-right md:pr-8 mb-4 md:mb-0">
-                                    <p class="font-bold main-yellow">2021 - 2022</p>
-                                </div>
-                                <div class="md:pl-8 md:border-l-4 border-transparent">
-                                    <h3 class="text-lg font-bold text-white">12th Class (92.83%)</h3>
-                                    <p class="text-gray-400">Narayana Jr college, Anantapur</p>
-                                </div>
-                            </div>
+                            <!-- Education Item 2 -->
                             <div class="reveal relative pl-10 md:grid md:grid-cols-2 md:gap-8 md:pl-0 items-center">
-                                <div class="md:text-right md:pr-8 mb-4 md:mb-0">
-                                    <p class="font-bold main-yellow">2019 - 2020</p>
-                                </div>
-                                <div class="md:pl-8 md:border-l-4 border-transparent">
-                                    <h3 class="text-lg font-bold text-white">10th Class (99.83%)</h3>
-                                    <p class="text-gray-400">Sri Chaitanya School, Anantapur</p>
-                                </div>
+                                <div class="timeline-dot"></div>
+                                <div class="md:text-right md:pr-8 mb-2 md:mb-0"><p class="font-bold main-yellow">2021 - 2022</p></div>
+                                <div class="md:pl-8"><h3 class="text-lg font-bold text-white">12th Class (92.83%)</h3><p class="text-gray-400">Narayana Jr college, Anantapur</p></div>
+                            </div>
+                            <!-- Education Item 3 -->
+                            <div class="reveal relative pl-10 md:grid md:grid-cols-2 md:gap-8 md:pl-0 items-center">
+                                <div class="timeline-dot"></div>
+                                <div class="md:text-right md:pr-8 mb-2 md:mb-0"><p class="font-bold main-yellow">2019 - 2020</p></div>
+                                <div class="md:pl-8"><h3 class="text-lg font-bold text-white">10th Class (99.83%)</h3><p class="text-gray-400">Sri Chaitanya School, Anantapur</p></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
             
+            <!-- Certifications Section -->
             <section id="certifications" class="py-20">
                 <div class="container mx-auto px-6">
                     <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">Certifications</h2>
@@ -283,27 +301,45 @@
                 </div>
             </section>
 
-            <section id="contact" class="py-20 bg-gray-900">
+            <!-- Contact Section -->
+            <section id="contact" class="py-20 bg-gray-800/50">
                 <div class="container mx-auto px-6">
                     <h2 class="section-title text-4xl font-bold text-center mb-12 text-white relative heading-font reveal">Get In Touch</h2>
-                    <div class="max-w-xl mx-auto text-center reveal">
-                         <p class="text-gray-400 mb-8">I'm currently seeking new opportunities and would love to hear from you. Whether you have a question or just want to say hi, feel free to reach out.</p>
-                        <a href="mailto:gniteeshreddy@gmail.com" class="inline-block bg-main-yellow hover-bg-main-yellow text-gray-900 font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105">Say Hello</a>
-                        <p class="text-gray-400 mt-6">Email: <a href="mailto:gniteeshreddy@gmail.com" class="main-yellow hover:underline">gniteeshreddy@gmail.com</a></p>
-                        <p class="text-gray-400">Phone: <a href="tel:+919113837148" class="main-yellow hover:underline">+91 9113837148</a></p>
+                    <div class="max-w-xl mx-auto reveal">
+                        <p class="text-center text-gray-400 mb-8">I'm currently seeking new opportunities and would love to hear from you. Whether you have a question or just want to say hi, feel free to reach out using the form below.</p>
+                        <!-- NOTE: This form needs a backend service like Formspree or Netlify Forms to work -->
+                        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-6">
+                            <div>
+                                <label for="name" class="sr-only">Name</label>
+                                <input type="text" name="name" id="name" placeholder="Your Name" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-main-yellow transition-all">
+                            </div>
+                            <div>
+                                <label for="email" class="sr-only">Email</label>
+                                <input type="email" name="email" id="email" placeholder="Your Email" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-main-yellow transition-all">
+                            </div>
+                            <div>
+                                <label for="message" class="sr-only">Message</label>
+                                <textarea name="message" id="message" rows="5" placeholder="Your Message" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-main-yellow transition-all"></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="inline-block bg-main-yellow hover-bg-main-yellow text-gray-900 font-bold py-3 px-10 rounded-full transition-all duration-300 transform hover:scale-105">Send Message</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </section>
         </main>
 
+        <!-- Footer -->
         <footer class="bg-gray-900 border-t border-gray-800">
             <div class="container mx-auto px-6 py-6 text-center text-gray-500">
                 <div class="flex justify-center items-center space-x-4 mb-4">
-                    <a href="https://linkedin.com/in/niteeshreddy01/" target="_blank" class="hover:main-yellow transition-colors"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                    <a href="https://github.com/niteeshreddy01" target="_blank" class="hover:main-yellow transition-colors"><i data-lucide="github" class="w-6 h-6"></i></a>
-                    <a href="mailto:gniteeshreddy@gmail.com" class="hover:main-yellow transition-colors"><i data-lucide="mail" class="w-6 h-6"></i></a>
+                    <a href="https://linkedin.com/in/niteeshreddy01/" target="_blank" class="hover:main-yellow transition-colors" aria-label="LinkedIn Profile"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                    <a href="https://github.com/niteeshreddy01" target="_blank" class="hover:main-yellow transition-colors" aria-label="GitHub Profile"><i data-lucide="github" class="w-6 h-6"></i></a>
+                    <a href="mailto:gniteeshreddy@gmail.com" class="hover:main-yellow transition-colors" aria-label="Send Email"><i data-lucide="mail" class="w-6 h-6"></i></a>
                 </div>
-                <p>&copy; 2025 Niteesh Reddy. G. All Rights Reserved.</p>
+                <p>&copy; <span id="current-year"></span> Niteesh Reddy. G. All Rights Reserved.</p>
+                 <p class="text-xs mt-2">Last updated: July 19, 2025 - Anantapur, Andhra Pradesh, India</p>
             </div>
         </footer>
     </div>
@@ -315,15 +351,20 @@
         // --- Entry Screen Logic ---
         const entryScreen = document.getElementById('entry-screen');
         const enterButton = document.getElementById('enter-button');
+        const mainContent = document.getElementById('main-content');
         
         enterButton.addEventListener('click', () => {
             entryScreen.classList.add('hidden');
-            document.body.style.overflow = 'auto'; // Restore scrollbar
+            document.body.style.overflowY = 'auto'; // Restore scrollbar
+            mainContent.style.opacity = '1';
             
             // Hides the element from the accessibility tree after the transition
             entryScreen.addEventListener('transitionend', () => {
                 entryScreen.style.display = 'none';
             }, { once: true });
+            
+            // Trigger scroll animations for any elements already in view
+            reveal();
         });
 
         // --- Mobile Menu Logic ---
@@ -332,7 +373,9 @@
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
-        document.querySelectorAll('#mobile-menu a, nav a').forEach(link => {
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.mobile-menu-link, nav a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
             });
@@ -344,15 +387,17 @@
             for (let i = 0; i < reveals.length; i++) {
                 const windowHeight = window.innerHeight;
                 const revealTop = reveals[i].getBoundingClientRect().top;
-                const revealPoint = 50;
+                const revealPoint = 50; // Distance from bottom of viewport to trigger animation
                 if (revealTop < windowHeight - revealPoint) {
                     reveals[i].classList.add('active');
                 }
             }
         };
         window.addEventListener('scroll', reveal);
-        // Run the function on page load to reveal visible elements
-        reveal();
+        
+        // --- Dynamic Copyright Year ---
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
     </script>
 </body>
 </html>
